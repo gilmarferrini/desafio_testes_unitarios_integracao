@@ -39,4 +39,13 @@ describe("Authenticate User", () => {
       })
     }).rejects.toBeInstanceOf(AppError)
   })
+
+  it ("should not be able to create a new session with invalid password", async () => {
+    expect(async () => {
+      await authenticateUserUseCase.execute({
+        email: "valid_mail@mail.com",
+        password: "8764"
+      })
+    }).rejects.toBeInstanceOf(AppError)
+  })
 })
