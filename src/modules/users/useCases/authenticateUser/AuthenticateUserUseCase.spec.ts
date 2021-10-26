@@ -1,3 +1,4 @@
+import { AppError } from "../../../../shared/errors/AppError"
 import { InMemoryUsersRepository } from "../../repositories/in-memory/InMemoryUsersRepository"
 import { CreateUserUseCase } from "../createUser/CreateUserUseCase"
 import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase"
@@ -28,5 +29,14 @@ describe("Authenticate User", () => {
 
     expect(authData).toHaveProperty("token")
     expect(authData.user).toHaveProperty("id")
+  })
+
+  it ("should not be able to create a new session with invalid email", async () => {
+    expect(async () => {
+      await authenticateUserUseCase.execute({
+        email: "invalid@mail.com",
+        password: "123456"
+      })
+    }).rejects.toBeInstanceOf(AppError)
   })
 })
