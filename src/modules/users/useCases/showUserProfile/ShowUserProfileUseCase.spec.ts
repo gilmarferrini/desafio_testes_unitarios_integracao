@@ -1,3 +1,4 @@
+import { AppError } from "../../../../shared/errors/AppError"
 import { InMemoryUsersRepository } from "../../repositories/in-memory/InMemoryUsersRepository"
 import { CreateUserUseCase } from "../createUser/CreateUserUseCase"
 import { ShowUserProfileUseCase } from "./ShowUserProfileUseCase"
@@ -26,5 +27,11 @@ describe("Show User Profile", () => {
 
     expect(response).toHaveProperty("id")
     expect(response.name).toEqual("valid name")
+  })
+
+  it ("should not be able to find user profile if user not exists", async () => {
+    expect(async () => {
+      await showUserProfileUseCase.execute("invalid id")
+    }).rejects.toBeInstanceOf(AppError)
   })
 })
