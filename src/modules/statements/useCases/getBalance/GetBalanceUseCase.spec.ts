@@ -44,4 +44,12 @@ describe("Get Balance", () => {
 
     expect(response.statement.length).toEqual(1)
   })
+
+  it("should not be able to get balance if user not exists", async () => {
+    expect(async () => {
+      await getBalanceUseCase.execute({
+        user_id: "1234",
+      })
+    }).rejects.toBeInstanceOf(AppError)
+  })
 })
