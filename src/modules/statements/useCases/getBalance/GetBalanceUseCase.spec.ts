@@ -14,7 +14,6 @@ enum OperationType {
   WITHDRAW = 'withdraw',
 }
 
-
 describe("Get Balance", () => {
 
   beforeEach(() => {
