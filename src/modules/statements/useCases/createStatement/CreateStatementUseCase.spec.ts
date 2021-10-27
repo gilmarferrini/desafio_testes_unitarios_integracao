@@ -48,6 +48,31 @@ describe("Get Statement", () => {
         description: "Deposit"
       })
     }).rejects.toBeInstanceOf(AppError)
+  })
 
+  it("should be able to create a new statement with withdraw", async () => {
+    const user = await inMemoryUsersRepository.create({
+      name: "Test name",
+      email: "test@email.com",
+      password: "123456"
+    })
+
+    await createStatementUseCase.execute({
+      user_id: user.id,
+      amount: 2000,
+      type: OperationType.DEPOSIT,
+      description: "Deposit"
+    })
+
+    const statement = await createStatementUseCase.execute({
+      user_id: user.id,
+      amount: 2000,
+      type: OperationType.WITHDRAW,
+      description: "Deposit"
+    })
+    
+
+    expect(statement).toHaveProperty("id")
+    expect(statement).toHaveProperty("user_id")
   })
 })
