@@ -1,3 +1,5 @@
-import { createConnection } from 'typeorm';
+import { createConnection, getConnectionOptions } from 'typeorm';
 
-(async () => await createConnection())();
+export async function connectDatabase() {
+  return await createConnection();
+}
